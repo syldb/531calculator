@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>531 Calculator by @syldb</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>531 calculator</h1>
+    <h2>Simple strengh assistance template</h2>
+
+    <h3>Insert your TM here</h3>
+    <form onsubmit="onSubmit(); return false;">
+      OHP:<br>
+      <input type="number" name="ohp"><br>
+      Close grip bench:
+      <input type="number" name="cg-bench"><br>
+      Deadlift:<br>
+      <input type="number" name="deadlift"><br>
+      Front squat:<br>
+      <input type="number" name="front-squat"><br>
+      Bench:
+      <input type="number" name="bench"><br>
+      Incline bench:
+      <input type="number" name="incline-bench"><br>
+      Squat:
+      <input type="number" name="squat"><br>
+      Stiff legs deadlift:
+      <input type="number" name="sl-deadlift"><br>
+
+      <input type="submit" value="Submit"><br><br>
+    </form>
+
+    <h3>Your numbers for this week</h3>
+    <p>
+      OHP:<br>
+      <span id="ohp">TBD</span>
+    </p>
+    <p>
+      Close grip bench:<br>
+      <span id="cg-bench">TBD</span>
+    </p>
+    <p>
+      Deadlift:<br>
+      <span name="deadlift">TBD</span>
+    </p>
+    <p>
+      Front squat:<br>
+      <span name="front-squat">TBD</span>
+    </p>
+    <p>
+      Bench:<br>
+      <span name="bench">TBD</span>
+    </p>
+    <p>
+      Incline bench:<br>
+      <span name="incline-bench">TBD</span>
+    <p>
+      Squat:<br>
+      <span name="squat">TBD</span>
+    </p>
+    <p>
+      Stiff legs deadlift:
+      <span name="sl-deadlift">TBD</span>
+    </p>
+
+    <script>
+      function onSubmit() {
+        var inputElements = document.querySelectorAll("form input[type='number']");
+        inputElements.forEach(function(inputElement) {
+          console.log("inputElement", inputElement);
+          var name = inputElement.getAttribute("name");
+          var trainingMax = inputElement.value;
+          console.log(name + ": " + trainingMax);
+          var resultElement = document.querySelector("span#" + name);
+          resultElement.innerHTML = trainingMax;
+        });
+      }
+    </script>
+  </body>
+</html>
