@@ -3,29 +3,36 @@
   <head>
     <meta charset="utf-8">
     <title>531 Calculator by @syldb</title>
-    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1>531 calculator</h1>
     <h2>Simple strengh assistance template</h2>
 
+    <h3>Choose your week</h3>
+    <select>
+      <option value="1">Week 1: 5/5/5</option>
+      <option value="2">Week 2: 3/3/3</option>
+      <option value="3">Week 3: 5/3/1</option>
+      <option value="4">Week 4: Deload</option>
+    </select>
+
     <h3>Insert your TM here</h3>
     <form onsubmit="onSubmit(); return false;">
       OHP:<br>
       <input type="number" name="ohp"><br>
-      Close grip bench:
+      Close grip bench:<br>
       <input type="number" name="cg-bench"><br>
       Deadlift:<br>
       <input type="number" name="deadlift"><br>
       Front squat:<br>
       <input type="number" name="front-squat"><br>
-      Bench:
+      Bench:<br>
       <input type="number" name="bench"><br>
-      Incline bench:
+      Incline bench:<br>
       <input type="number" name="incline-bench"><br>
-      Squat:
+      Squat:<br>
       <input type="number" name="squat"><br>
-      Stiff legs deadlift:
+      Stiff legs deadlift:<br>
       <input type="number" name="sl-deadlift"><br>
 
       <input type="submit" value="Submit"><br><br>
@@ -60,7 +67,7 @@
       <span name="squat">TBD</span>
     </p>
     <p>
-      Stiff legs deadlift:
+      Stiff legs deadlift:<br>
       <span name="sl-deadlift">TBD</span>
     </p>
 
@@ -68,13 +75,41 @@
       function onSubmit() {
         var inputElements = document.querySelectorAll("form input[type='number']");
         inputElements.forEach(function(inputElement) {
+          // Get the TM for this exercice
           console.log("inputElement", inputElement);
           var name = inputElement.getAttribute("name");
           var trainingMax = inputElement.value;
-          console.log(name + ": " + trainingMax);
+
+          // Avort if input is empty for this exercice
+          if (trainingMax === "") {
+            return;
+          }
+          // Compute the three values
+          resultValues = "";
+          for (var i=0; i<3; i++) {
+            resultValues  = resultValues + computeValue(trainingMax, 1, i, true);
+            if (i<2) {
+              resultValues = resultValues + " / ";
+            }
+          }
+
+          // Write values in the result
+          console.log(name + ": " + resultValues);
           var resultElement = document.querySelector("span#" + name);
-          resultElement.innerHTML = trainingMax;
+          resultElement.innerHTML = resultValues;
         });
+      }
+
+      var referenceTableMainLifts = [
+        [65, 75, 85],
+        [70, 80, 90],
+        [75, 85, 95]
+      ];
+      var referenceTableAssitanceLifts = [];
+
+      function computeValue(trainingMax, weekNumber, setNumber, isMainLift) {
+        var percentage = referenceTableMainLifts[weekNumber-1][setNumber];
+        return parseFloat(trainingMax) * percentage / 100;
       }
     </script>
   </body>
