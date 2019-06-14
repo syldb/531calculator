@@ -9,7 +9,7 @@
     <h2>Simple strengh assistance template</h2>
 
     <h3>Choose your week</h3>
-    <select>
+    <select id="week-select">
       <option value="1">Week 1: 5/5/5</option>
       <option value="2">Week 2: 3/3/3</option>
       <option value="3">Week 3: 5/3/1</option>
@@ -19,21 +19,21 @@
     <h3>Insert your TM here</h3>
     <form onsubmit="onSubmit(); return false;">
       OHP:<br>
-      <input type="number" name="ohp"><br>
+      <input type="float" name="ohp"><br>
       Close grip bench:<br>
-      <input type="number" name="cg-bench"><br>
+      <input type="float" name="cg-bench"><br>
       Deadlift:<br>
-      <input type="number" name="deadlift"><br>
+      <input type="float" name="deadlift"><br>
       Front squat:<br>
-      <input type="number" name="front-squat"><br>
+      <input type="float" name="front-squat"><br>
       Bench:<br>
-      <input type="number" name="bench"><br>
+      <input type="float" name="bench"><br>
       Incline bench:<br>
-      <input type="number" name="incline-bench"><br>
+      <input type="float" name="incline-bench"><br>
       Squat:<br>
-      <input type="number" name="squat"><br>
+      <input type="float" name="squat"><br>
       Stiff legs deadlift:<br>
-      <input type="number" name="sl-deadlift"><br>
+      <input type="float" name="sl-deadlift"><br>
 
       <input type="submit" value="Submit"><br><br>
     </form>
@@ -49,31 +49,31 @@
     </p>
     <p>
       Deadlift:<br>
-      <span name="deadlift">TBD</span>
+      <span id="deadlift">TBD</span>
     </p>
     <p>
       Front squat:<br>
-      <span name="front-squat">TBD</span>
+      <span id="front-squat">TBD</span>
     </p>
     <p>
       Bench:<br>
-      <span name="bench">TBD</span>
+      <span id="bench">TBD</span>
     </p>
     <p>
       Incline bench:<br>
-      <span name="incline-bench">TBD</span>
+      <span id="incline-bench">TBD</span>
     <p>
       Squat:<br>
-      <span name="squat">TBD</span>
+      <span id="squat">TBD</span>
     </p>
     <p>
       Stiff legs deadlift:<br>
-      <span name="sl-deadlift">TBD</span>
+      <span id="sl-deadlift">TBD</span>
     </p>
 
     <script>
       function onSubmit() {
-        var inputElements = document.querySelectorAll("form input[type='number']");
+        var inputElements = document.querySelectorAll("form input[type='float']");
         inputElements.forEach(function(inputElement) {
           // Get the TM for this exercice
           var name = inputElement.getAttribute("name");
@@ -85,9 +85,10 @@
           }
           // Compute the three values
           var isMainLift = isMainLiftReference[name];
+          var weekNumber = document.getElementById("week-select").value;
           resultValues = "";
           for (var i=0; i<3; i++) {
-            resultValues  = resultValues + computeValue(trainingMax, 1, i, isMainLift);
+            resultValues  = resultValues + computeValue(trainingMax, weekNumber, i, isMainLift);
             if (i<2) {
               resultValues = resultValues + " / ";
             }
