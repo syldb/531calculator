@@ -76,7 +76,6 @@
         var inputElements = document.querySelectorAll("form input[type='number']");
         inputElements.forEach(function(inputElement) {
           // Get the TM for this exercice
-          console.log("inputElement", inputElement);
           var name = inputElement.getAttribute("name");
           var trainingMax = inputElement.value;
 
@@ -85,16 +84,16 @@
             return;
           }
           // Compute the three values
+          var isMainLift = isMainLiftReference[name];
           resultValues = "";
           for (var i=0; i<3; i++) {
-            resultValues  = resultValues + computeValue(trainingMax, 1, i, true);
+            resultValues  = resultValues + computeValue(trainingMax, 1, i, isMainLift);
             if (i<2) {
               resultValues = resultValues + " / ";
             }
           }
 
           // Write values in the result
-          console.log(name + ": " + resultValues);
           var resultElement = document.querySelector("span#" + name);
           resultElement.innerHTML = resultValues;
         });
@@ -103,12 +102,34 @@
       var referenceTableMainLifts = [
         [65, 75, 85],
         [70, 80, 90],
-        [75, 85, 95]
+        [75, 85, 95],
+        [40, 50, 60]
       ];
-      var referenceTableAssitanceLifts = [];
-
+      var referenceTableAssitanceLifts = [
+        [50, 60, 70],
+        [60, 70, 80],
+        [65, 75, 85],
+        [40, 50, 60]
+      ];
+      var isMainLiftReference = {
+        "ohp": true,
+        "cg-bench": false,
+        "deadlift": true,
+        "front-squat": false,
+        "bench": true,
+        "incline-bench": false,
+        "squat": true,
+        "sl-deadlift": false
+      }
+      
       function computeValue(trainingMax, weekNumber, setNumber, isMainLift) {
-        var percentage = referenceTableMainLifts[weekNumber-1][setNumber];
+        if (isMainLift) {
+          var referenceTable = referenceTableMainLifts;
+        }
+        else {
+          var referenceTable = referenceTableAssitanceLifts;
+        }
+        var percentage = referenceTable[weekNumber-1][setNumber];
         return parseFloat(trainingMax) * percentage / 100;
       }
     </script>
