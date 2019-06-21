@@ -72,6 +72,30 @@
     </p>
 
     <script>
+
+      function loadJSON(filePath, callback) {
+        var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        xobj.open('GET', 'trainingMax.json', true); // Replace 'my_data' with the path to your file
+        xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+          }
+        };
+        xobj.send(null);
+      }
+
+      function initForm() {
+        loadJSON('trainingMax.json', function(data) {
+          var liftsData = JSON.parse(data);
+          for (var lift in liftsData) {
+            var inputElement = document.querySelector("form input[name=" + lift + "]");
+            inputElement.value = liftsData[lift];
+          }
+        });
+      }
+
       function onSubmit() {
         var inputElements = document.querySelectorAll("form input[type='float']");
         inputElements.forEach(function(inputElement) {
@@ -147,6 +171,8 @@
         }
         return result;
       }
+
+      initForm()
     </script>
   </body>
 </html>
