@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>531 Calculator by @syldb</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <layout></layout>
+  </div>
+
+  <script>
+    Vue.component('training-max', {
+      template: `
+        <div>
+          <div v-if="!done">
+            <h2>Enter your training max</h2>
+            <p>Week selected: {{weekSelected}}</p>
+            <input type="float" name="tm" v-model="trainingMax">
+            <button v-on:click="next">Go</button>
+            TRAINING MAX = {{trainingMax}}
+          </div>
+          <result v-else :tm=trainingMax :weekNumber=weekSelected></result>
+        </div>
+        `,
+        props: ['weekSelected'],
+        data: function() {
+          return {
+            done: false,
+            trainingMax: undefined,
+          }
+        },
+        methods: {
+          next: function() {
+            console.log("next 2 called")
+            this.done=true;
+          }
+        }
+    })
+
+    Vue.component('result', {
+      template: `
+        <div>
+          <h2>Results</h2>
+          <p>trainingMax: {{tm}}</p>
+          <p>week number: {{weekNumber}}</p>
+        </div>
+        `,
+      props: ['tm', 'weekNumber']
+    })
+
+    Vue.component('layout', {
+      template: `
+        <div>
+          <div v-if="!done">
+            <h3>Choose your week</h3>
+            <button v-on:click="next(1)">Week 1</button>
+            <button v-on:click="next(2)">Week 2</button>
+            <button v-on:click="next(3)">Week 3</button>
+          </div>
+          <training-max v-else :weekSelected=weekSelected></training-max>
+        </div>
+        `,
+        data: function() {
+          return {
+            done: false,
+            weekSelected: undefined,
+          }
+        },
+        methods: {
+          next: function(weekSelected) {
+            console.log("next called");
+            this.done = true;
+            this.weekSelected = weekSelected;
+          }
+        }
+    })
+
+    var app = new Vue({
+      el: '#app',
+    })
+  </script>
+</body>
+</html>
