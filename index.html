@@ -113,8 +113,8 @@
           var isMainLift = isMainLiftReference[name];
           var weekNumber = document.getElementById("week-select").value;
           resultValues = "";
-          for (var i=0; i<3; i++) {
-            resultValues  = resultValues + computeValue(trainingMax, weekNumber, i, isMainLift);
+          for (var i=1; i<=3; i++) {
+            resultValues  = resultValues + roundTo2point5(computePercentage(trainingMax, weekNumber, i, isMainLift));
             if (i<2) {
               resultValues = resultValues + " / ";
             }
@@ -125,19 +125,6 @@
           resultElement.innerHTML = resultValues;
         });
       }
-
-      function computeValue(trainingMax, weekNumber, setNumber, isMainLift) {
-        if (isMainLift) {
-          var referenceTable = referenceTableMainLifts;
-        }
-        else {
-          var referenceTable = referenceTableAssitanceLifts;
-        }
-        var percentage = referenceTable[weekNumber-1][setNumber];
-        var value = parseFloat(trainingMax) * percentage / 100;
-        return roundTo2point5(value);
-      }
-
       initForm()
     </script>
   </body>

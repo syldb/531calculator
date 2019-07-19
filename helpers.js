@@ -10,3 +10,15 @@ function roundTo2point5(number) {
   }
   return result;
 }
+
+function computePercentage(trainingMax, weekNumber, setNumber, isMainLift) {
+  if (isMainLift) {
+    var referenceTable = referenceTableMainLifts;
+  }
+  else {
+    var referenceTable = referenceTableAssitanceLifts;
+  }
+  var percentage = referenceTable[weekNumber-1][setNumber-1];
+  var value = parseFloat(trainingMax) * percentage / 100;
+  return value;
+}
