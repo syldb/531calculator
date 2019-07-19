@@ -1,14 +1,12 @@
 var referenceTableMainLifts = [
   [65, 75, 85],
   [70, 80, 90],
-  [75, 85, 95],
-  [40, 50, 60]
+  [75, 85, 95]
 ];
 var referenceTableAssitanceLifts = [
   [50, 60, 70],
   [60, 70, 80],
-  [65, 75, 85],
-  [40, 50, 60]
+  [65, 75, 85]
 ];
 var isMainLiftReference = {
   "ohp": true,
