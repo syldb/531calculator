@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>531 Calculator by @syldb</title>
   <script src="https://unpkg.com/vue"></script>
+  <script src="helpers.js"></script>
+  <script src="data.js"></script>
+  <link rel="stylesheet" href="foundation/css/foundation.css">
 </head>
 <body>
   <div id="app">
@@ -13,14 +18,16 @@
     Vue.component('training-max', {
       template: `
         <div>
-          <div v-if="!done">
-            <h2>Enter your training max</h2>
-            <p>Week selected: {{weekSelected}}</p>
-            <input type="float" name="tm" v-model="trainingMax">
-            <button v-on:click="next">Go</button>
-            TRAINING MAX = {{trainingMax}}
+          <div class="grid-x grid-padding-x">
+            <div class="large-12 cell">
+              <p>
+                <label>Enter your training max</label>
+                <input type="float" name="tm" v-model="trainingMax"/>
+              </p>
+              <p><a v-on:click="next" class="button">Go</a></p>
+            </div>
           </div>
-          <result v-else :tm=trainingMax :weekNumber=weekSelected></result>
+          <result v-if="done" :tm=trainingMax :weekNumber=weekSelected></result>
         </div>
         `,
         props: ['weekSelected'],
@@ -40,25 +47,53 @@
 
     Vue.component('result', {
       template: `
-        <div>
-          <h2>Results</h2>
-          <p>trainingMax: {{tm}}</p>
-          <p>week number: {{weekNumber}}</p>
+      <div>
+        <div class="grid-x grid-padding-x">
+          <div class="large-4 medium-4 small-4 cell">
+            <div class="primary callout">
+              <p>First set: <strong>{{sets[0]}}</strong></p>
+              <p>Second set: <strong>{{sets[1]}}</strong></p>
+              <p>Third set: <strong>{{sets[2]}}</strong></p>
+            </div>
+          </div>
         </div>
-        `,
-      props: ['tm', 'weekNumber']
+      </div>
+      `,
+      props: ['tm', 'weekNumber'],
+      computed: {
+        sets: function() {
+          var sets = []
+          for (var i=1; i<=3; i++) {
+            sets.push(computePercentage(this.tm, this.weekNumber, i, true))
+          }
+          return sets
+        }
+      }
     })
 
     Vue.component('layout', {
       template: `
-        <div>
-          <div v-if="!done">
-            <h3>Choose your week</h3>
-            <button v-on:click="next(1)">Week 1</button>
-            <button v-on:click="next(2)">Week 2</button>
-            <button v-on:click="next(3)">Week 3</button>
+        <div class="grid-container">
+
+          <div class="grid-x grid-padding-x">
+            <div class="large-12 cell">
+              <h1>5/3/1 Calculator</h1>
+            </div>
           </div>
-          <training-max v-else :weekSelected=weekSelected></training-max>
+          <div>
+            <div class="grid-x grid-padding-x">
+              <div class="large-6 medium-6 cell">
+                <label>Select your week</label>
+                <input type="radio" value="1" id="week-1" v-model="weekSelected" v-on:click="next">
+                <label for="week-1">5/5/5</label>
+                <input type="radio" value="2" id="week 2" v-model="weekSelected" v-on:click="next">
+                <label for="week-2">3/3/3</label>
+                <input type="radio" value="3" id="week-3" v-model="weekSelected" v-on:click="next">
+                <label for="week-3">5/3/1</label>
+              </div>
+            </div>
+          </div>
+          <training-max v-if="done" :weekSelected=weekSelected></training-max>
         </div>
         `,
         data: function() {
@@ -69,9 +104,8 @@
         },
         methods: {
           next: function(weekSelected) {
-            console.log("next called");
+            console.log("next called", weekSelected);
             this.done = true;
-            this.weekSelected = weekSelected;
           }
         }
     })
