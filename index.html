@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>531 Calculator by @syldb</title>
+    <script src="helpers.js"></script>
   </head>
   <body>
     <h1>531 calculator</h1>
@@ -157,19 +158,6 @@
         var percentage = referenceTable[weekNumber-1][setNumber];
         var value = parseFloat(trainingMax) * percentage / 100;
         return roundTo2point5(value);
-      }
-
-      function roundTo2point5(number) {
-        number10 = number * 10;
-        quotient = Math.floor(number10 / 25);
-        remainder = number10 % 25;
-        if (remainder < 12.5) {
-          result = quotient * 25 / 10
-        }
-        else {
-          result = (quotient + 1) * 25 / 10
-        }
-        return result;
       }
 
       initForm()
