@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>531 calculator</h1>
-    <h2>Simple strengh assistance template</h2>
+    <h2>by syldb</h2>
 
     <h3>Choose your week</h3>
     <select id="week-select">
@@ -19,84 +19,16 @@
 
     <h3>Insert your TM here</h3>
     <form onsubmit="onSubmit(); return false;">
-      OHP:<br>
-      <input type="float" name="ohp"><br>
-      Close grip bench:<br>
-      <input type="float" name="cg-bench"><br>
-      Deadlift:<br>
-      <input type="float" name="deadlift"><br>
-      Front squat:<br>
-      <input type="float" name="front-squat"><br>
-      Bench:<br>
-      <input type="float" name="bench"><br>
-      Incline bench:<br>
-      <input type="float" name="incline-bench"><br>
-      Squat:<br>
-      <input type="float" name="squat"><br>
-      Stiff legs deadlift:<br>
-      <input type="float" name="sl-deadlift"><br>
-
+      <input type="float" name="val"><br>
       <input type="submit" value="Submit"><br><br>
     </form>
 
     <h3>Your numbers for this week</h3>
     <p>
-      OHP:<br>
-      <span id="ohp">TBD</span>
-    </p>
-    <p>
-      Close grip bench:<br>
-      <span id="cg-bench">TBD</span>
-    </p>
-    <p>
-      Deadlift:<br>
-      <span id="deadlift">TBD</span>
-    </p>
-    <p>
-      Front squat:<br>
-      <span id="front-squat">TBD</span>
-    </p>
-    <p>
-      Bench:<br>
-      <span id="bench">TBD</span>
-    </p>
-    <p>
-      Incline bench:<br>
-      <span id="incline-bench">TBD</span>
-    <p>
-      Squat:<br>
-      <span id="squat">TBD</span>
-    </p>
-    <p>
-      Stiff legs deadlift:<br>
-      <span id="sl-deadlift">TBD</span>
+      <span id="val">TBD</span>
     </p>
 
     <script>
-
-      function loadJSON(filePath, callback) {
-        var xobj = new XMLHttpRequest();
-        xobj.overrideMimeType("application/json");
-        xobj.open('GET', 'trainingMax.json', true); // Replace 'my_data' with the path to your file
-        xobj.onreadystatechange = function () {
-          if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-          }
-        };
-        xobj.send(null);
-      }
-
-      function initForm() {
-        loadJSON('trainingMax.json', function(data) {
-          var liftsData = JSON.parse(data);
-          for (var lift in liftsData) {
-            var inputElement = document.querySelector("form input[name=" + lift + "]");
-            inputElement.value = liftsData[lift];
-          }
-        });
-      }
-
       function onSubmit() {
         var inputElements = document.querySelectorAll("form input[type='float']");
         inputElements.forEach(function(inputElement) {
@@ -109,11 +41,10 @@
             return;
           }
           // Compute the three values
-          var isMainLift = isMainLiftReference[name];
           var weekNumber = document.getElementById("week-select").value;
           resultValues = "";
           for (var i=1; i<=3; i++) {
-            resultValues  = resultValues + roundTo2point5(computePercentage(trainingMax, weekNumber, i, isMainLift));
+            resultValues  = resultValues + roundTo2point5(computePercentage(trainingMax, weekNumber, i));
             if (i<3) {
               resultValues = resultValues + " / ";
             }
@@ -124,7 +55,6 @@
           resultElement.innerHTML = resultValues;
         });
       }
-      initForm()
     </script>
   </body>
 </html>
