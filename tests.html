@@ -23,34 +23,19 @@
 
   QUnit.test("Integration: computePercentage with tables", function(assert) {
     // Week 1
-    // Main lift
     assert.equal(computePercentage(97, 1, 1, true), 63.05);
     assert.equal(computePercentage(97, 1, 2, true), 72.75);
     assert.equal(computePercentage(97, 1, 3, true), 82.45);
-    // Assistance lift
-    assert.equal(computePercentage(54, 1, 1, false), 27);
-    assert.equal(computePercentage(54, 1, 2, false), 32.4);
-    assert.equal(computePercentage(54, 1, 3, false), 37.8);
 
     // Week 2
-    // Main lift
     assert.equal(computePercentage(97, 2, 1, true), 67.9);
     assert.equal(computePercentage(97, 2, 2, true), 77.6);
     assert.equal(computePercentage(97, 2, 3, true), 87.3);
-    // Assistance lift
-    assert.equal(computePercentage(54, 2, 1, false), 32.4);
-    assert.equal(computePercentage(54, 2, 2, false), 37.8);
-    assert.equal(computePercentage(54, 2, 3, false), 43.2);
 
     // Week 3
-    // Main lift
     assert.equal(computePercentage(97, 3, 1, true), 72.75);
     assert.equal(computePercentage(97, 3, 2, true), 82.45);
     assert.equal(computePercentage(97, 3, 3, true), 92.15);
-    // Assistance lift
-    assert.equal(computePercentage(54, 3, 1, false), 35.1);
-    assert.equal(computePercentage(54, 3, 2, false), 40.5);
-    assert.equal(computePercentage(54, 3, 3, false), 45.9);
   });
   </script>
 </head>
